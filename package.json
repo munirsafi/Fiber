@@ -1,0 +1,14 @@
+{
+  "name": "fiber",
+  "version": "0.0.1",
+  "description": "an all-purpose oracle on the Etheruem block",
+  "main": "truffle.js",
+  "scripts": {
+    "deploy": "truffle migrate -f 1 --to 2 && node deploy && truffle migrate -f 3 --to 3 && truffle test",
+    "test": "truffle test"
+  },
+  "author": "Munir Safi",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
