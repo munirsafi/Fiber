@@ -9,8 +9,9 @@ fs.readFile(fiberLibrary, 'utf-8', (err, contents) => {
         
         const fiberAddress = JSON.parse(data).networks['1'].address;
         let update = contents.split('\n');
-        update.splice(19, 1, `\t\tif(fiberExists(${fiberAddress}) > 0) {`);
-        update.splice(21, 1, `\t\t\tfiber = Fiber(${fiberAddress}); // mainnet`);
+        const index = update.indexOf('    function getFiberWare() internal returns(bool) {') + 1;
+        update.splice(index, 1, `\t\tif(fiberExists(${fiberAddress}) > 0) {`);
+        update.splice(index + 2, 1, `\t\t\tfiber = Fiber(${fiberAddress}); // mainnet`);
         update = update.join('\n')
 
         fs.writeFile(fiberLibrary, update, (err) => {
