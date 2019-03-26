@@ -21,10 +21,15 @@ contract runningFiber {
         _;
     }
 
+    modifier fiberAccess() {
+		require(msg.sender == 0x7Ed1826B9590d91Fe0A321830498480B3c9202b0, "Unauthorized attempt to use callback function!");
+        _;
+    }
+
     function getFiberWare() internal returns(bool) {
-		if(fiberExists(0xa57d0B20BcCcC137779fe6C55d1AD1644f83706D) > 0) {
+		if(fiberExists(0x7Ed1826B9590d91Fe0A321830498480B3c9202b0) > 0) {
             networkID = 0;
-			fiber = Fiber(0xa57d0B20BcCcC137779fe6C55d1AD1644f83706D); // mainnet
+			fiber = Fiber(0x7Ed1826B9590d91Fe0A321830498480B3c9202b0); // mainnet
             return true;
         }
         if(fiberExists(0x0000000000000000000000000000000000000001) > 0) {
@@ -48,7 +53,7 @@ contract runningFiber {
         queryID = fiber.request(calltype, request);
     }
 
-    function __callback() external pure {
+    function __callback(bytes32 _fiberID, string memory _response) public {
         return;
     }
 
