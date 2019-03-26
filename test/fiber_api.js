@@ -22,4 +22,17 @@ contract('SampleContract', async (accounts) => {
         assert.equal(events.length, 1, "The Fiber Request event was not emitted");
     });
 
+    it("should emit 3 Fiber request events", async () => {
+        const instance = await SampleContract.deployed();
+        const fiberContract = new web3.eth.Contract(Fiber.abi, Fiber.address);
+
+        let events = [];
+        fiberContract.events.FiberReq({fromBlock: "latest"}, (err, event) => events.push(event));
+        await instance.testEvent({ from: accounts[0], gas: 450000 });
+        await instance.testEvent({ from: accounts[0], gas: 450000 });
+        await instance.testEvent({ from: accounts[0], gas: 450000 });
+
+        assert.equal(events.length, 3, "The Fiber Request events were not emitted");
+    });
+
 });
